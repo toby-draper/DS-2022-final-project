@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scatter Plot Generator</title>
+</head>
+<body>
+    <h1>Generate a Scatter Plot</h1>
+
+    <!-- Form: selects numeric columns for X and Y -->
+    <form action="/scatter" method="post">
+
+        {% if columns %}
+        <label for="x_column">Select X-Axis Variable:</label><br>
+        <select name="x_column" id="x_column">
+            {% for col in columns %}
+                {% set pretty = col.replace('_', ' ').title() %}
+                <option value="{{ col }}"
+                    {% if x_col_selected == col %}selected{% endif %}>
+                    {{ pretty }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label for="y_column">Select Y-Axis Variable:</label><br>
+        <select name="y_column" id="y_column">
+            {% for col in columns %}
+                {% set pretty = col.replace('_', ' ').title() %}
+                <option value="{{ col }}"
+                    {% if y_col_selected == col %}selected{% endif %}>
+                    {{ pretty }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        {% endif %}
+
+        <button type="submit">Generate Scatter Plot</button>
+    </form>
+
+    <!-- Error message if needed -->
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <!-- Display the generated scatter plot -->
+    {% if image %}
+        <h2>Scatter Plot:</h2>
+        <img src="data:image/png;base64,{{ image }}" />
+    {% endif %}
+
+</body>
+</html>

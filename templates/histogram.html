@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Histogram Generator</title>
+</head>
+<body>
+    <h1>Generate a Histogram</h1>
+
+    <!-- Form: selects numeric column -->
+    <form action="/histogram" method="post">
+        
+        {% if columns %}
+        <label for="column">Select a Numeric Variable:</label><br>
+        <select name="column" id="column">
+            {% for col in columns %}
+                {% set pretty = col.replace('_', ' ').title() %}
+                <option value="{{ col }}"
+                    {% if selected_col == col %}selected{% endif %}>
+                    {{ pretty }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        {% endif %}
+
+        <button type="submit">Generate Histogram</button>
+    </form>
+
+    <!-- Error message if needed -->
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <!-- Display the generated histogram -->
+    {% if image %}
+        <h2>Histogram:</h2>
+        <img src="data:image/png;base64,{{ image }}" />
+    {% endif %}
+
+</body>
+</html>

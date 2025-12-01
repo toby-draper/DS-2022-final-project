@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pie Chart Generator</title>
+</head>
+<body>
+    <h1>Generate a Pie Chart</h1>
+
+    <!-- Form: selects categorical column -->
+    <form action="/pie" method="post">
+
+        {% if columns %}
+        <label for="column">Select a Categorical Variable:</label><br>
+        <select name="column" id="column">
+            {% for col in columns %}
+                {% set pretty = col.replace('_', ' ').title() %}
+                <option value="{{ col }}"
+                    {% if selected_col == col %}selected{% endif %}>
+                    {{ pretty }}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        {% endif %}
+
+        <button type="submit">Generate Pie Chart</button>
+    </form>
+
+    <!-- Error Handling -->
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <!-- Display Pie Chart -->
+    {% if image %}
+        <h2>Pie Chart:</h2>
+        <img src="data:image/png;base64,{{ image }}" />
+    {% endif %}
+
+</body>
+</html>

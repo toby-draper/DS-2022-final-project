@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CSV</title>
+</head>
+<body>
+    <h1>Upload a CSV File</h1>
+
+    <!-- Error message if something went wrong -->
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <!-- Upload form -->
+    <form method="POST" enctype="multipart/form-data">
+        <label>Select CSV file:</label><br><br>
+        <input type="file" name="file" accept=".csv" required>
+        <br><br>
+        <button type="submit">Upload</button>
+    </form>
+
+    <!-- Visualization options once file is uploaded -->
+    {% if uploaded %}
+        <h2>Choose a Visualization</h2>
+
+        <button onclick="window.location.href='/histogram'">Histogram</button>
+        <button onclick="window.location.href='/scatter'">Scatter Plot</button>
+        <button onclick="window.location.href='/bar'">Bar Chart</button>
+        <button onclick="window.location.href='/pie'">Pie Chart</button>
+    {% endif %}
+</body>
+</html>
